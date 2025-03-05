@@ -9,10 +9,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
-    - name: Build Docker image
-      run: |
-        docker build -t my-image .
         
   unit-test:
     container: cuaesd/aesd-autotest:24-unit-test
