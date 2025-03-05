@@ -3,12 +3,24 @@ name: assignment-test
 on: [push, pull_request]
 
 jobs:
-  build:
+  full-test:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Grant Docker permission
+        run: |
+          sudo usermod -aG docker $USER
+          sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+          sudo chmod g+rwx "$HOME/.docker" -R
+          newgrp docker
+
+      - name: Check Docker version
+        run: docker version --format '{{.Server.APIVersion}}'
         
   unit-test:
     container: cuaesd/aesd-autotest:24-unit-test
