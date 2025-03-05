@@ -1,11 +1,24 @@
 name: assignment-test
-on:
-    push:
-        tags-ignore:
-            - '*'
-        branches:
-            - '*'
+
+on: [push, pull_request]
+
 jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker.io
+
+    - name: Build Docker image
+      run: |
+        docker build -t my-image .
+        
     unit-test:
         container: cuaesd/aesd-autotest:24-unit-test
         runs-on: self-hosted
