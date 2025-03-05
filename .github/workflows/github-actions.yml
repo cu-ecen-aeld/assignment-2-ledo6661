@@ -19,7 +19,7 @@ jobs:
       run: |
         docker build -t my-image .
         
-    unit-test:
+  unit-test:
         container: cuaesd/aesd-autotest:24-unit-test
         runs-on: self-hosted
         steps:
@@ -28,7 +28,7 @@ jobs:
             run : git submodule update --init --recursive
           - name: Run unit test
             run: ./unit-test.sh
-    full-test:
+  full-test:
         container: cuaesd/aesd-autotest:24-assignment2
         runs-on: self-hosted
         steps:
